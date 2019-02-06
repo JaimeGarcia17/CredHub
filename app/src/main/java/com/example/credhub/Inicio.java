@@ -16,6 +16,7 @@ public class Inicio extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
         miCancion = MediaPlayer.create(Inicio.this, R.raw.siuuu);
