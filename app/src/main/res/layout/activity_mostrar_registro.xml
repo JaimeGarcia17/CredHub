@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MostrarRegistro"
+    android:background="@color/colorPrimaryDark">
+
+    <View
+        android:id="@+id/auxiliarMostrar"
+        android:layout_height="1dp"
+        android:layout_width="10dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/textoIdentificador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Identificador"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
+    <TextView
+        android:id="@+id/muestraIdentificador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aquí va la descripción..."
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textoIdentificador"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:id="@+id/textoUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre de usuario"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/muestraIdentificador"
+        android:layout_marginTop="40dp"/>
+
+    <TextView
+        android:id="@+id/muestraUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aquí va el username..."
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textoUsername"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:id="@+id/textoPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/muestraUsername"
+        android:layout_toLeftOf="@id/auxiliarMostrar"
+        android:layout_marginTop="40dp"/>
+
+    <Button
+        android:id="@+id/muestraPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Ver"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textoPassword"
+        android:layout_toLeftOf="@id/auxiliarMostrar"
+        android:drawableLeft="@drawable/iconopassword"/>
+
+    <TextView
+        android:id="@+id/textoExportar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exportar registro"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/muestraUsername"
+        android:layout_toRightOf="@id/auxiliarMostrar"
+        android:layout_marginTop="40dp"/>
+
+    <Button
+        android:id="@+id/exportarRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="  Exportar"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textoExportar"
+        android:layout_toRightOf="@id/auxiliarMostrar"
+        android:drawableLeft="@drawable/iconoexportar"/>
+
+
+</RelativeLayout>

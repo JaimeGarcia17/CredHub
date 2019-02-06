@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AnadirRegistro"
+    android:background="@color/colorPrimaryDark">
+
+
+    <TextView
+        android:id="@+id/newRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Añadir nuevo registro"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:textSize="25dp"/>
+
+    <View
+        android:id="@+id/auxiliarAnadir"
+        android:layout_height="1dp"
+        android:layout_width="0dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/textoIdentificador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Identificador"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/newRegister"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/inputIdentificador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
+        android:textSize="15dp"
+        android:layout_below="@id/textoIdentificador"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/textoUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre de usuario"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/inputIdentificador"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/inputUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:text=""
+        android:textSize="15dp"
+        android:layout_below="@id/textoUsername"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/textoPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/inputUsername"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/inputPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:text=""
+        android:textSize="15dp"
+        android:layout_below="@id/textoPassword"
+        android:layout_centerHorizontal="true"
+        />
+
+    <Button
+        android:id="@+id/botonAnadirRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="  Guardar"
+        android:layout_below="@id/inputPassword"
+        android:layout_centerHorizontal="true"
+        android:drawableLeft="@drawable/iconoguardar"
+        android:layout_marginTop="30dp"/>
+
+</RelativeLayout>
