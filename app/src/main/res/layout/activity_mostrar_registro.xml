@@ -11,8 +11,16 @@
         android:id="@+id/auxiliarMostrar"
         android:layout_height="1dp"
         android:layout_width="10dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/showRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Más detalles"
         android:layout_centerHorizontal="true"
-        />
+        android:layout_marginTop="50dp"
+        android:textSize="25dp"/>
 
     <TextView
         android:id="@+id/textoIdentificador"
@@ -20,16 +28,19 @@
         android:layout_height="wrap_content"
         android:text="Identificador"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"/>
+        android:layout_below="@id/showRegister"
+        android:layout_marginTop="30dp"/>
 
-    <TextView
+    <EditText
         android:id="@+id/muestraIdentificador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Aquí va la descripción..."
-        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
+        android:textSize="15dp"
         android:layout_below="@id/textoIdentificador"
-        android:layout_marginTop="30dp"/>
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/textoUsername"
@@ -38,16 +49,18 @@
         android:text="Nombre de usuario"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/muestraIdentificador"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="30dp"/>
 
-    <TextView
+    <EditText
         android:id="@+id/muestraUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Aquí va el username..."
-        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:text=""
+        android:textSize="15dp"
         android:layout_below="@id/textoUsername"
-        android:layout_marginTop="30dp"/>
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/textoPassword"
@@ -56,28 +69,37 @@
         android:text="Password"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/muestraUsername"
-        android:layout_toLeftOf="@id/auxiliarMostrar"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/inputPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:text=""
+        android:textSize="15dp"
+        android:layout_below="@id/textoPassword"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/muestraPassword"
-        android:layout_width="wrap_content"
+        android:layout_width="45dp"
         android:layout_height="wrap_content"
-        android:text=" Ver"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/textoPassword"
-        android:layout_toLeftOf="@id/auxiliarMostrar"
-        android:drawableLeft="@drawable/iconopassword"/>
+        android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@id/inputPassword"
+        android:drawableLeft="@drawable/iconopassword" />
 
-    <TextView
-        android:id="@+id/textoExportar"
+    <Button
+        android:id="@+id/goToHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Exportar registro"
+        android:text="  Home"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/muestraUsername"
-        android:layout_toRightOf="@id/auxiliarMostrar"
-        android:layout_marginTop="40dp"/>
+        android:layout_below="@id/actualizarRegistro"
+        android:drawableLeft="@drawable/iconohome"
+        android:layout_marginTop="15dp"/>
 
     <Button
         android:id="@+id/exportarRegistro"
@@ -85,9 +107,31 @@
         android:layout_height="wrap_content"
         android:text="  Exportar"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/textoExportar"
-        android:layout_toRightOf="@id/auxiliarMostrar"
-        android:drawableLeft="@drawable/iconoexportar"/>
+        android:layout_below="@id/inputPassword"
+        android:layout_toLeftOf="@id/actualizarRegistro"
+        android:drawableLeft="@drawable/iconoexportar"
+        android:layout_marginTop="30dp"/>
+
+    <Button
+        android:id="@+id/eliminarRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="  Eliminar"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/inputPassword"
+        android:layout_toRightOf="@id/actualizarRegistro"
+        android:drawableLeft="@drawable/iconoeliminarregistro"
+        android:layout_marginTop="30dp"/>
+
+    <Button
+        android:id="@+id/actualizarRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="  Guardar"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/inputPassword"
+        android:drawableLeft="@drawable/iconoactualizar"
+        android:layout_marginTop="30dp"/>
 
 
 </RelativeLayout>

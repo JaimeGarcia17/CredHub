@@ -41,8 +41,7 @@
         android:text=""
         android:textSize="15dp"
         android:layout_below="@id/textoIdentificador"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/textoUsername"
@@ -62,8 +61,7 @@
         android:text=""
         android:textSize="15dp"
         android:layout_below="@id/textoUsername"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/textoPassword"
@@ -94,6 +92,14 @@
         android:layout_below="@id/inputPassword"
         android:layout_centerHorizontal="true"
         android:drawableLeft="@drawable/iconoguardar"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp" />
+
+    <Button
+        android:id="@+id/generaPassword"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/inputPassword"
+        android:layout_below="@id/textoPassword"
+        android:drawableLeft="@drawable/iconocontrasena"/>
 
 </RelativeLayout>

@@ -7,4 +7,10 @@
     tools:context=".ImportarRegistro"
     android:background="@color/colorPrimaryDark">
 
+    <ListView
+        android:id="@+id/listaCredencialesRepositorio"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+
 </RelativeLayout>

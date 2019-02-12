@@ -9,23 +9,23 @@ import android.os.Bundle;
 
 import static android.media.MediaPlayer.*;
 
+/**
+ * Created by Jaime García on 02,febrero,2019
+ */
+
 public class Inicio extends AppCompatActivity {
 
-    private int time = 5000;
-    MediaPlayer miCancion;
+    private int time = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
-        miCancion = MediaPlayer.create(Inicio.this, R.raw.siuuu);
-        miCancion.start();
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivity(new Intent(Inicio.this, ListadoDeCredenciales.class));
-                miCancion.stop();
                 finish();
             }
         },time);
