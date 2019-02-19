@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.credhub.Model.Credenciales;
 
@@ -72,7 +73,11 @@ public class ListadoDeCredenciales extends AppCompatActivity {
         importarRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
-                startActivity(new Intent(ListadoDeCredenciales.this, ImportarRegistro.class));
+                if(compruebaConexion()){
+                    startActivity(new Intent(ListadoDeCredenciales.this, ImportarRegistro.class));
+                }
+                //Toast.makeText(this,"WebService fuera de línea!",Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -143,6 +148,27 @@ public class ListadoDeCredenciales extends AppCompatActivity {
             Log.e(Constantes.LOG_DB_ERROR,"DELETE FROM " +Constantes.TABLE_NAME);
         }
 
+    }
+
+    private boolean compruebaConexion(){
+
+        final boolean[] value = new boolean[1];
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                EndPoint endPoint = new EndPoint();
+                value[0] = endPoint.enLinea();
+            }
+        });
+
+        try {
+            t.start();
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return value[0];
     }
 
 }

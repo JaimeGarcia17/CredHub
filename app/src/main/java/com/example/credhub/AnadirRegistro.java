@@ -2,6 +2,7 @@ package com.example.credhub;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class AnadirRegistro extends AppCompatActivity {
 
     EditText id, username, password;
     Button saveRegister, randomPassword;
+    DatabaseHelper databaseHelper = new DatabaseHelper(this, "credencialesDB", null, 1);
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -39,7 +41,7 @@ public class AnadirRegistro extends AppCompatActivity {
             @Override
             public void onClick( View v ) {
 
-                if (checkInputs() == Constantes.OK) {
+                if (checkInputs() == Constantes.OK && !existeResultado(id.getText().toString())) {
                     saveRegister();
                     startActivity(new Intent(AnadirRegistro.this, ListadoDeCredenciales.class));
                     finish();
@@ -60,7 +62,7 @@ public class AnadirRegistro extends AppCompatActivity {
 
         try {
 
-            DatabaseHelper databaseHelper = new DatabaseHelper(this, "credencialesDB", null, 1);
+
             SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
             ContentValues contentValues = new ContentValues();
@@ -129,6 +131,19 @@ public class AnadirRegistro extends AppCompatActivity {
         }
 
 
+    }
+
+    private boolean existeResultado( String identificador ) {
+
+        SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT id FROM " + Constantes.TABLE_NAME + " WHERE id = '" + identificador + "'", null);
+
+        if (cursor.getCount() == 1) {
+            Toast.makeText(this,"Ya existe ese id!",Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
     }
 
 

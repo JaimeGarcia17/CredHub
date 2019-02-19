@@ -37,7 +37,7 @@ public class MostrarRegistro extends AppCompatActivity {
         home = (Button) findViewById(R.id.goToHome);
         delete = (Button) findViewById(R.id.eliminarRegistro);
         update = (Button) findViewById(R.id.actualizarRegistro);
-        export = (Button)findViewById(R.id.exportarRegistro);
+        export = (Button) findViewById(R.id.exportarRegistro);
 
         Bundle bundle = getIntent().getExtras();
         Credenciales miCredencial = null;
@@ -88,7 +88,10 @@ public class MostrarRegistro extends AppCompatActivity {
         export.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
-                exportarRegistro(finalMiCredencial.getId(), finalMiCredencial.getUsername(), finalMiCredencial.getPassword());
+                if(compruebaConexion()){
+                    exportarRegistro(finalMiCredencial.getId(), finalMiCredencial.getUsername(), finalMiCredencial.getPassword());
+                }
+
             }
         });
 
@@ -131,11 +134,54 @@ public class MostrarRegistro extends AppCompatActivity {
         }
     }
 
-    /* TODO */
     private void exportarRegistro( String id, String username, String password ) {
 
-        /*Exporta la credencial al repo web en el siguiente formato(id+username+password)*/
-        Toast.makeText(MostrarRegistro.this, "Falta por implementar", Toast.LENGTH_SHORT).show();
+        final String args[] = {"http"};
+        final String idFinal = id;
+        final String usernameFinal = username;
+        final String passwordFinal = password;
 
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                EndPoint endPoint = new EndPoint();
+                endPoint.establecerConexion(args);
+                endPoint.exportarRegistro(idFinal, usernameFinal, passwordFinal);
+            }
+        });
+
+        try {
+            t.start();
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IllegalThreadStateException i) {
+            i.printStackTrace();
+        }
+
+        Toast.makeText(this, "Se ha exportado correctamente!", Toast.LENGTH_SHORT).show();
     }
+
+    private boolean compruebaConexion(){
+
+        final boolean[] value = new boolean[1];
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                EndPoint endPoint = new EndPoint();
+                value[0] = endPoint.enLinea();
+            }
+        });
+
+        try {
+            t.start();
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return value[0];
+    }
+
 }
