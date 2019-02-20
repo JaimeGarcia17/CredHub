@@ -4,8 +4,12 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +27,8 @@ public class MostrarRegistro extends AppCompatActivity {
     TextView id, username, textPassword;
     Button password, home, export, update, delete;
     DatabaseHelper databaseHelper = new DatabaseHelper(this, "credencialesDB", null, 1);
+    private int time = 2000;
+
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -55,7 +61,15 @@ public class MostrarRegistro extends AppCompatActivity {
         password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
-                Toast.makeText(getApplicationContext(), finalMiCredencial.getPassword(), Toast.LENGTH_SHORT).show();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        textPassword.setTransformationMethod(new PasswordTransformationMethod());
+                    }
+                },time);
+
+                textPassword.setTransformationMethod(null);
             }
         });
 
