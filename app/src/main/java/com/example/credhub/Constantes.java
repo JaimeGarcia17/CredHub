@@ -27,4 +27,6 @@ public class Constantes {
     public static final int MIN = 33; /* ! */
     public static final int MAX = 126; /* ~ */
     public static final int LENGTH= 10;
+
+    public static final String PREFERENCES = "SharedPreferences";
 }

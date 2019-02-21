@@ -2,6 +2,7 @@ package com.example.credhub;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -36,6 +37,15 @@ public class AnadirRegistro extends AppCompatActivity {
         password = (EditText) findViewById(R.id.inputPassword);
         saveRegister = (Button) findViewById(R.id.botonAnadirRegistro);
         randomPassword = (Button) findViewById(R.id.generaPassword);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(Constantes.PREFERENCES,MODE_PRIVATE);
+        String usernameString = sharedPreferences.getString("username","No username defined");
+        String passwordString = sharedPreferences.getString("password","No password defineds");
+
+        if(usernameString!=null && passwordString!=null){
+            username.setText(usernameString);
+            password.setText(passwordString);
+        }
 
         saveRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +92,11 @@ public class AnadirRegistro extends AppCompatActivity {
 
             Toast.makeText(this, "Se ha almacenado correctamente!", Toast.LENGTH_SHORT).show();
             sqLiteDatabase.close();
+
+            SharedPreferences.Editor editor = getSharedPreferences(Constantes.PREFERENCES,MODE_PRIVATE).edit();
+            editor.putString("username",username.getText().toString());
+            editor.putString("password",password.getText().toString());
+            editor.apply();
 
 
         } catch (SQLiteException exception) {
