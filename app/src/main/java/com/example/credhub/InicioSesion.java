@@ -30,7 +30,7 @@ public class InicioSesion extends AppCompatActivity {
             public void onClick( View v ) {
                 if(existeUsuario()){
                     startActivity(new Intent(InicioSesion.this, ListadoDeCredenciales.class));
-                }
+                } 
             }
         });
     }
