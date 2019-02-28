@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InicioSesion"
+    android:background="@color/colorPrimaryDark">
+
+    <TextView
+        android:id="@+id/textoBienvenida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Bienvenido a CredHub!"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"/>
+
+
+    <TextView
+        android:id="@+id/textoInicioSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Inicia sesión para visualizar tus credenciales almacenadas!"
+        android:textAlignment="center"
+        android:textSize="22dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textoBienvenida"/>
+
+    <TextView
+        android:id="@+id/textoUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textoInicioSesion"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="Nombre de usuario"/>
+
+    <EditText
+        android:id="@+id/inputUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textoUsername"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/textoPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputUsername"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="Password"/>
+
+    <EditText
+        android:id="@+id/inputPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textoPassword"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:text=""
+        android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:drawableLeft="@drawable/iconologin"
+        android:text="  Iniciar sesión" />
+
+</RelativeLayout>
