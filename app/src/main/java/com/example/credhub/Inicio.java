@@ -25,7 +25,7 @@ public class Inicio extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(Inicio.this, ListadoDeCredenciales.class));
+                startActivity(new Intent(Inicio.this, InicioSesion.class));
                 finish();
             }
         },time);
