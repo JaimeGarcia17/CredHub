@@ -44,7 +44,7 @@ public class ImportarRegistro extends AppCompatActivity {
     ArrayList<String> arrayListResultado = new ArrayList<String>();
     String[] resultado = new String[3];
     EndPoint endPoint = new EndPoint();
-    String[] args = {"http"};
+    String[] args = {"http+auth"};
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -55,7 +55,6 @@ public class ImportarRegistro extends AppCompatActivity {
 
         endPoint.establecerConexion(args);
         listaCredenciales();
-
 
         if (arrayListDescripciones != null) {
             ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayListDescripciones);
@@ -95,6 +94,8 @@ public class ImportarRegistro extends AppCompatActivity {
             e.printStackTrace();
         } catch (IllegalThreadStateException i) {
             i.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 

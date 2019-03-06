@@ -31,6 +31,7 @@ public class ListadoDeCredenciales extends AppCompatActivity {
     ArrayList<Credenciales> arrayListCredenciales;
     DatabaseHelper databaseHelper = new DatabaseHelper(this, "credencialesDB", null, 1);
 
+
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
@@ -73,11 +74,11 @@ public class ListadoDeCredenciales extends AppCompatActivity {
         importarRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
-                if(compruebaConexion()){
+                if (compruebaConexion()) {
                     startActivity(new Intent(ListadoDeCredenciales.this, ImportarRegistro.class));
+                } else {
+                    Toast.makeText(ListadoDeCredenciales.this, "El repositorio está fuera de servicio!", Toast.LENGTH_SHORT).show();
                 }
-                //Toast.makeText(this,"WebService fuera de línea!",Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -119,7 +120,7 @@ public class ListadoDeCredenciales extends AppCompatActivity {
 
         } catch (SQLException exception) {
             exception.printStackTrace();
-            Log.e(Constantes.LOG_DB_ERROR,"SELECT * FROM " +Constantes.TABLE_NAME);
+            Log.e(Constantes.LOG_DB_ERROR, "SELECT * FROM " + Constantes.TABLE_NAME);
         }
 
     }
@@ -145,12 +146,12 @@ public class ListadoDeCredenciales extends AppCompatActivity {
 
         } catch (SQLiteException e) {
             e.printStackTrace();
-            Log.e(Constantes.LOG_DB_ERROR,"DELETE FROM " +Constantes.TABLE_NAME);
+            Log.e(Constantes.LOG_DB_ERROR, "DELETE FROM " + Constantes.TABLE_NAME);
         }
 
     }
 
-    private boolean compruebaConexion(){
+    private boolean compruebaConexion() {
 
         final boolean[] value = new boolean[1];
         Thread t = new Thread(new Runnable() {

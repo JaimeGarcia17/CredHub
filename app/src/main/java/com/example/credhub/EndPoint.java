@@ -1,6 +1,7 @@
 package com.example.credhub;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -8,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Vector;
 
@@ -38,14 +40,16 @@ public class EndPoint {
     private static final String WS_METHOD_IMPORT = "ImportRecord";
     private static final String WS_METHOD_EXPORT = "ExportRecord";
 
+    String BASIC_AUTH_USERNAME = InicioSesion.usernameLogin;
+    String BASIC_AUTH_PASSWORD = InicioSesion.passwordLogin;
+
     public void establecerConexion( String[] args ) {
 
         try {
             // Establish test code behaviour
             boolean USE_HTTPS;
             boolean USE_BASIC_AUTH;
-            String BASIC_AUTH_USERNAME = "sdm";
-            String BASIC_AUTH_PASSWORD = "repo4droid";
+
             URL urlWebService;
 
             if (args.length == 1 && args[0].toLowerCase().equals("http")) // HTTP
@@ -240,6 +244,11 @@ public class EndPoint {
             URL url = new URL("http://10.0.2.2/SDM/WebRepo?wsdl");
             HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
             urlc.setRequestProperty("Connection", "close");
+
+            String strUserPass = BASIC_AUTH_USERNAME + ":" + BASIC_AUTH_PASSWORD;
+            String basicAuth = "Basic " + new String(org.kobjects.base64.Base64.encode(strUserPass.getBytes()));
+
+            urlc.setRequestProperty("Authorization", basicAuth);
             urlc.setConnectTimeout(2000);
             urlc.connect();
 

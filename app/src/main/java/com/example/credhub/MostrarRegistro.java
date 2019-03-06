@@ -67,7 +67,7 @@ public class MostrarRegistro extends AppCompatActivity {
                     public void run() {
                         textPassword.setTransformationMethod(new PasswordTransformationMethod());
                     }
-                },time);
+                }, time);
 
                 textPassword.setTransformationMethod(null);
             }
@@ -102,10 +102,11 @@ public class MostrarRegistro extends AppCompatActivity {
         export.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
-                if(compruebaConexion()){
+                if (compruebaConexion()) {
                     exportarRegistro(finalMiCredencial.getId(), finalMiCredencial.getUsername(), finalMiCredencial.getPassword());
+                } else {
+                    Toast.makeText(MostrarRegistro.this, "El repositorio está fuera de servicio!", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
@@ -150,7 +151,7 @@ public class MostrarRegistro extends AppCompatActivity {
 
     private void exportarRegistro( String id, String username, String password ) {
 
-        final String args[] = {"http"};
+        final String args[] = {"http+auth"};
         final String idFinal = id;
         final String usernameFinal = username;
         final String passwordFinal = password;
@@ -177,7 +178,7 @@ public class MostrarRegistro extends AppCompatActivity {
         Toast.makeText(this, "Se ha exportado correctamente!", Toast.LENGTH_SHORT).show();
     }
 
-    private boolean compruebaConexion(){
+    private boolean compruebaConexion() {
 
         final boolean[] value = new boolean[1];
         Thread t = new Thread(new Runnable() {
