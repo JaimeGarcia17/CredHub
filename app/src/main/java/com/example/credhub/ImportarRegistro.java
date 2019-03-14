@@ -67,6 +67,7 @@ public class ImportarRegistro extends AppCompatActivity {
                     importaRegistro(identificador);
                     saveRegister(resultado[0], resultado[1], resultado[2]);
                     startActivity(new Intent(ImportarRegistro.this, ListadoDeCredenciales.class));
+                    finish();
                 }
             });
         }

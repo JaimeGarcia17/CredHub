@@ -48,6 +48,7 @@ public class InicioSesion extends AppCompatActivity {
                     usernameLogin = userString;
                     passwordLogin = passwordString;
                     startActivity(intent);
+                    finish();
                 }
             }
         });

@@ -96,6 +96,7 @@ public class MostrarRegistro extends AppCompatActivity {
             public void onClick( View v ) {
                 actualizarRegistro();
                 startActivity(new Intent(MostrarRegistro.this, ListadoDeCredenciales.class));
+                finish();
             }
         });
 

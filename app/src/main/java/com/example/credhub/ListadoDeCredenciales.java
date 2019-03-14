@@ -59,6 +59,7 @@ public class ListadoDeCredenciales extends AppCompatActivity {
                     intent.putExtras(bundle);
 
                     startActivity(intent);
+                    finish();
                 }
             });
 
@@ -68,6 +69,7 @@ public class ListadoDeCredenciales extends AppCompatActivity {
             @Override
             public void onClick( View v ) {
                 startActivity(new Intent(ListadoDeCredenciales.this, AnadirRegistro.class));
+                finish();
             }
         });
 
@@ -76,6 +78,7 @@ public class ListadoDeCredenciales extends AppCompatActivity {
             public void onClick( View v ) {
                 if (compruebaConexion()) {
                     startActivity(new Intent(ListadoDeCredenciales.this, ImportarRegistro.class));
+                    finish();
                 } else {
                     Toast.makeText(ListadoDeCredenciales.this, "El repositorio está fuera de servicio!", Toast.LENGTH_SHORT).show();
                 }
