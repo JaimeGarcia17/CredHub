@@ -3,8 +3,7 @@ package com.example.credhub;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
+import net.sqlcipher.database.*;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.credhub.Model.Credenciales;
 
+import java.security.PrivateKey;
 import java.util.ArrayList;
 
 /**
@@ -36,6 +36,11 @@ public class ListadoDeCredenciales extends AppCompatActivity {
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado_de_credenciales);
+
+        GestionClaves gestionClaves = new GestionClaves();
+        String clave = gestionClaves.decryptString(GestionClaves.KEY_ALIAS);
+
+        SQLiteDatabase.loadLibs(this);
 
         anadirRegistro = (Button) findViewById(R.id.anadirRegistro);
         importarRegistro = (Button) findViewById(R.id.importarRegistro);
@@ -101,7 +106,7 @@ public class ListadoDeCredenciales extends AppCompatActivity {
 
         try {
 
-            SQLiteDatabase db = databaseHelper.getReadableDatabase();
+            SQLiteDatabase db = databaseHelper.getReadableDatabase(GestionClaves.claveDesencriptada);
             Cursor cursor = db.rawQuery(Constantes.FIND_ALL, null);
 
             Credenciales miCredencial;
@@ -124,6 +129,8 @@ public class ListadoDeCredenciales extends AppCompatActivity {
         } catch (SQLException exception) {
             exception.printStackTrace();
             Log.e(Constantes.LOG_DB_ERROR, "SELECT * FROM " + Constantes.TABLE_NAME);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
@@ -142,7 +149,7 @@ public class ListadoDeCredenciales extends AppCompatActivity {
 
         try {
 
-            SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
+            SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase(GestionClaves.claveDesencriptada);
             sqLiteDatabase.delete(Constantes.TABLE_NAME, null, null);
             Log.i(Constantes.LOG_DB, "DELETE FROM " + Constantes.TABLE_NAME);
             sqLiteDatabase.close();
@@ -161,7 +168,7 @@ public class ListadoDeCredenciales extends AppCompatActivity {
             @Override
             public void run() {
                 EndPoint endPoint = new EndPoint();
-                value[0] = endPoint.enLinea();
+                value[0] = endPoint.enLinea(InicioSesion.modoComunicacion);
             }
         });
 

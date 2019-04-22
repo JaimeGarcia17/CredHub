@@ -78,43 +78,14 @@ public class EndPoint {
                 // Set HTTP URL
                 androidHttpTransport = new HttpTransportSE("http://10.0.2.2/SDM/WebRepo?wsdl");
             } else {
-                // Create a trust manager that does not validate certificate chains,
-                // and also disable hostname verification.
-                // (**IMPORTANT NOTE: This is used here to allow our custom certificates
-                // for TESTING purposes, it is not suitable for a production environment)
-                TrustManager[] trustAllCerts = new TrustManager[]{
-                        new X509TrustManager() {
-                            @Override
-                            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                                return new X509Certificate[0];
-                            }
-
-                            @Override
-                            public void checkClientTrusted(
-                                    java.security.cert.X509Certificate[] certs, String authType ) {
-                            }
-
-                            @Override
-                            public void checkServerTrusted(
-                                    java.security.cert.X509Certificate[] certs, String authType ) {
-                            }
-                        }
-                };
-
-                HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
-                    @Override
-                    public boolean verify( String hostname, SSLSession session ) {
-                        return true;
-                    }
-                });
 
                 // Initialize TLS context
                 SSLContext sc = SSLContext.getInstance("TLSv1.2");
-                sc.init(null, trustAllCerts, new java.security.SecureRandom()); // *Set 2nd argument to NULL for default trust managers
+                sc.init(null, null, new java.security.SecureRandom()); // *Set 2nd argument to NULL for default trust managers
                 HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
                 // Set HTTPS URL
-                androidHttpTransport = new HttpTransportSE("https://localhost/SDM/WebRepo?wsdl");
+                androidHttpTransport = new HttpTransportSE("https://10.0.2.2/SDM/WebRepo?wsdl");
             }
 
             // Activate basic authentication
@@ -238,26 +209,57 @@ public class EndPoint {
         return null;
     }
 
-    public boolean enLinea() {
+    public boolean enLinea( String modoComunicacion ) {
 
         try {
+
             URL url = new URL("http://10.0.2.2/SDM/WebRepo?wsdl");
+            URL urlhttps = new URL("https://10.0.2.2/SDM/WebRepo?wsdl");
+
             HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection urlchttps = (HttpsURLConnection) urlhttps.openConnection();
+
             urlc.setRequestProperty("Connection", "close");
+            urlchttps.setRequestProperty("Connection", "close");
 
             String strUserPass = BASIC_AUTH_USERNAME + ":" + BASIC_AUTH_PASSWORD;
             String basicAuth = "Basic " + new String(org.kobjects.base64.Base64.encode(strUserPass.getBytes()));
 
-            urlc.setRequestProperty("Authorization", basicAuth);
-            urlc.setConnectTimeout(2000);
-            urlc.connect();
-
-            if (urlc.getResponseCode() == 200) {
-                return true;
-            } else {
-                Log.d("NO INTERNET", "NO INTERNET");
-                return false;
+            switch (modoComunicacion) {
+                case "http":
+                    break;
+                case "http+auth":
+                    urlc.setRequestProperty("Authorization", basicAuth);
+                    break;
+                case "https+auth":
+                    urlchttps.setRequestProperty("Authorization", basicAuth);
+                    break;
             }
+
+            if (modoComunicacion.equals("http") || modoComunicacion.equals("http+auth")) {
+                urlc.setConnectTimeout(2000);
+                urlc.connect();
+
+                if (urlc.getResponseCode() == 200) {
+                    return true;
+                } else {
+                    Log.d("NO INTERNET", "NO INTERNET");
+                    return false;
+                }
+            } else {
+                urlchttps.setConnectTimeout(2000);
+                urlchttps.connect();
+
+                if (urlchttps.getResponseCode() == 200) {
+                    return true;
+                } else {
+                    Log.d("NO INTERNET", "NO INTERNET");
+                    return false;
+                }
+
+            }
+
+
         } catch (MalformedURLException e1) {
             e1.printStackTrace();
         } catch (IOException e1) {

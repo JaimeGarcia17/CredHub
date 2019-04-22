@@ -16,23 +16,11 @@
         android:textSize="30dp"
         android:layout_centerHorizontal="true"/>
 
-
-    <TextView
-        android:id="@+id/textoInicioSesion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Inicia sesión para visualizar tus credenciales almacenadas!"
-        android:textAlignment="center"
-        android:textSize="22dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/textoBienvenida"/>
-
     <TextView
         android:id="@+id/textoUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textoInicioSesion"
+        android:layout_below="@id/textoBienvenida"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:text="Nombre de usuario"/>
@@ -68,11 +56,29 @@
         android:text=""
         android:textSize="15dp" />
 
+    <TextView
+        android:id="@+id/textoSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="Modo de comunicación"/>
+
+
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textoSpinner"/>
+
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/inputPassword"
+        android:layout_below="@id/spinner"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:drawableLeft="@drawable/iconologin"

@@ -1,8 +1,7 @@
 package com.example.credhub;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import net.sqlcipher.database.*;
 
 /**
  * Created by Jaime García on 08,febrero,2019

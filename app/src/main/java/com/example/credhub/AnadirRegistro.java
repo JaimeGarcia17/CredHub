@@ -3,8 +3,7 @@ package com.example.credhub;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
+import net.sqlcipher.database.*;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.security.PrivateKey;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.PatternSyntaxException;
 
@@ -30,6 +30,8 @@ public class AnadirRegistro extends AppCompatActivity {
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anadir_registro);
+
+        SQLiteDatabase.loadLibs(this);
 
         id = (EditText) findViewById(R.id.inputIdentificador);
         username = (EditText) findViewById(R.id.inputUsername);
@@ -59,12 +61,18 @@ public class AnadirRegistro extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(AnadirRegistro.this, ListadoDeCredenciales.class));
+        finish();
+    }
+
     private void saveRegister() {
 
         try {
 
-
-            SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
+            SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase(GestionClaves.claveDesencriptada);
 
             ContentValues contentValues = new ContentValues();
             contentValues.put(Constantes.COLUMN_ID, id.getText().toString());
@@ -134,9 +142,9 @@ public class AnadirRegistro extends AppCompatActivity {
 
     }
 
-    private boolean existeResultado( String identificador ) {
+    private boolean existeResultado( String identificador )  {
 
-        SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase(GestionClaves.claveDesencriptada);
 
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT id FROM " + Constantes.TABLE_NAME + " WHERE id = '" + identificador + "'", null);
 

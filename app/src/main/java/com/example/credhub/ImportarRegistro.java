@@ -3,12 +3,9 @@ package com.example.credhub;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.net.ConnectivityManager;
-import android.net.IpSecManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
+import net.sqlcipher.database.*;
+
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,7 +41,7 @@ public class ImportarRegistro extends AppCompatActivity {
     ArrayList<String> arrayListResultado = new ArrayList<String>();
     String[] resultado = new String[3];
     EndPoint endPoint = new EndPoint();
-    String[] args = {"http+auth"};
+    String[] args = {InicioSesion.modoComunicacion};
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -55,6 +52,8 @@ public class ImportarRegistro extends AppCompatActivity {
 
         endPoint.establecerConexion(args);
         listaCredenciales();
+
+
 
         if (arrayListDescripciones != null) {
             ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayListDescripciones);
@@ -70,9 +69,18 @@ public class ImportarRegistro extends AppCompatActivity {
                     finish();
                 }
             });
+
+
         }
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(ImportarRegistro.this, ListadoDeCredenciales.class));
+        finish();
+    }
 
     private void listaCredenciales() {
 
@@ -138,7 +146,7 @@ public class ImportarRegistro extends AppCompatActivity {
 
     private boolean existeResultado( String identificador ) {
 
-        SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase(GestionClaves.claveDesencriptada);
 
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT id FROM " + Constantes.TABLE_NAME + " WHERE id = '" + identificador + "'", null);
 
@@ -151,7 +159,8 @@ public class ImportarRegistro extends AppCompatActivity {
     private void insertaRegistro( String id, String username, String password ) {
 
         try {
-            SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
+
+            SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase(GestionClaves.claveDesencriptada);
 
             ContentValues contentValues = new ContentValues();
             contentValues.put(Constantes.COLUMN_ID, id);
@@ -182,7 +191,7 @@ public class ImportarRegistro extends AppCompatActivity {
 
         try {
 
-            SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
+            SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase(GestionClaves.claveDesencriptada);
 
             ContentValues contentValues = new ContentValues();
             contentValues.put(Constantes.COLUMN_USERNAME, username);

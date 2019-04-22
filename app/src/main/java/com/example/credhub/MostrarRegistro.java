@@ -2,9 +2,7 @@ package com.example.credhub;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.os.CountDownTimer;
+import net.sqlcipher.database.*;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -114,11 +112,18 @@ public class MostrarRegistro extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(MostrarRegistro.this, ListadoDeCredenciales.class));
+        finish();
+    }
+
     private void actualizarRegistro() {
 
         try {
 
-            SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
+            SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase(GestionClaves.claveDesencriptada);
 
             ContentValues contentValues = new ContentValues();
             contentValues.put(Constantes.COLUMN_USERNAME, username.getText().toString());
@@ -139,7 +144,7 @@ public class MostrarRegistro extends AppCompatActivity {
     private void borrarRegistro( Credenciales miCredencial ) {
         try {
 
-            SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
+            SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase(GestionClaves.claveDesencriptada);
             sqLiteDatabase.delete(Constantes.TABLE_NAME, Constantes.COLUMN_ID + " = ?", new String[]{miCredencial.getId()});
             Log.i(Constantes.LOG_DB, "DELETE REGISTER WITH ID = " + miCredencial.getId());
             sqLiteDatabase.close();
@@ -152,7 +157,7 @@ public class MostrarRegistro extends AppCompatActivity {
 
     private void exportarRegistro( String id, String username, String password ) {
 
-        final String args[] = {"http+auth"};
+        final String args[] = {InicioSesion.modoComunicacion};
         final String idFinal = id;
         final String usernameFinal = username;
         final String passwordFinal = password;
@@ -186,7 +191,7 @@ public class MostrarRegistro extends AppCompatActivity {
             @Override
             public void run() {
                 EndPoint endPoint = new EndPoint();
-                value[0] = endPoint.enLinea();
+                value[0] = endPoint.enLinea(InicioSesion.modoComunicacion);
             }
         });
 

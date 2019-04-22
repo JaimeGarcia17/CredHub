@@ -5,14 +5,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.util.Base64;
 
 /**
@@ -23,9 +30,12 @@ public class InicioSesion extends AppCompatActivity {
 
     Button login;
     EditText username, password;
+    KeyStore keyStore;
+    Spinner spinner;
 
     public static String usernameLogin = "";
     public static String passwordLogin = "";
+    public static String modoComunicacion = "";
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -35,6 +45,23 @@ public class InicioSesion extends AppCompatActivity {
         login = (Button) findViewById(R.id.login);
         username = (EditText) findViewById(R.id.inputUsername);
         password = (EditText) findViewById(R.id.inputPassword);
+
+        spinner  = (Spinner) findViewById(R.id.spinner);
+        String[] comunicacion = {"http","http+auth","https+auth"};
+        spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, comunicacion));
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected( AdapterView<?> parent, View view, int position, long id ) {
+                modoComunicacion = (String) spinner.getAdapter().getItem(position);
+            }
+
+            @Override
+            public void onNothingSelected( AdapterView<?> parent ) {
+                modoComunicacion = "http";
+            }
+        });
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +74,18 @@ public class InicioSesion extends AppCompatActivity {
                     Intent intent = new Intent(InicioSesion.this, ListadoDeCredenciales.class);
                     usernameLogin = userString;
                     passwordLogin = passwordString;
+                    GestionClaves gestionClaves = new GestionClaves();
+                    gestionClaves.loadKeyStore();
+                    try {
+                        if(gestionClaves.loadPrivateKey(GestionClaves.KEY_ALIAS) == null){
+                            gestionClaves.generateNewKeyPair(GestionClaves.KEY_ALIAS,InicioSesion.this);
+                        }else{
+                            gestionClaves.loadKeyStore();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    String clave = gestionClaves.encryptString(passwordLogin);
                     startActivity(intent);
                     finish();
                 }
